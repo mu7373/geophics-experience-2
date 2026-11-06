@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>实验二：机械臂运动解算与虚拟指令</title>
+    <link rel="stylesheet" href="./css/main.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./node_modules/three/build/three.module.js",
+          "three/addons/": "./node_modules/three/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">计算机图形与动画 · 实验二</p>
+        <h1>机械臂仿真：运动解算、虚拟指令与坐标系校正</h1>
+      </div>
+      <span id="run-state" class="state">未连接</span>
+    </header>
+
+    <main class="layout">
+      <section class="viewport" aria-label="机械臂仿真视图">
+        <div id="scene-root" class="scene-placeholder">
+          <p>正在加载实验一机械臂模型…</p>
+          <small>模型、关节限位与基础关节控制器已迁移到本项目。</small>
+        </div>
+      </section>
+
+      <aside class="panel" aria-label="实验控制面板">
+        <section>
+          <h2>坐标系校正</h2>
+          <div class="button-row">
+            <button id="record-tool-point">记录工具点</button>
+            <button id="solve-tool-frame" disabled>四点法求解</button>
+          </div>
+          <div class="button-row">
+            <button id="record-user-point">记录用户点</button>
+            <button id="solve-user-frame" disabled>三点法求解</button>
+          </div>
+          <p id="calibration-message" class="hint">请先加载实验一的机器人模型。</p>
+        </section>
+
+        <section>
+          <h2>虚拟指令</h2>
+          <textarea id="program-input" spellcheck="false">SET SPEED 50%
+MOVJ HOME
+MOVJ P_PRE
+MOVL P_GRASP, SPEED=30%
+GRIP CLOSE
+WAIT 0.5
+MOVL P_PRE, SPEED=30%
+MOVJ P_PLACE_PRE
+MOVL P_PLACE, SPEED=20%
+GRIP OPEN
+MOVJ HOME</textarea>
+          <div class="button-row">
+            <button id="check-program">检查脚本</button>
+            <button id="run-program" disabled>运行</button>
+            <button id="emergency-stop" class="danger">急停</button>
+          </div>
+          <pre id="program-message" class="output">等待脚本检查。</pre>
+        </section>
+      </aside>
+    </main>
+
+    <script type="module" src="./js/app.js"></script>
+  </body>
+</html>
+

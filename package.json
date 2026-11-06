@@ -1,0 +1,13 @@
+{
+  "name": "robot-arm-lab2",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "实验二：机械臂运动解算、虚拟指令与坐标系校正",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "three": "^0.169.0"
+  }
+}
