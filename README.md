@@ -19,10 +19,9 @@ robot-arm-lab2/
 
 ## 启动方式
 
-首次运行先安装依赖：
+页面通过 jsDelivr 加载 Three.js，因此可直接使用 VS Code Live Server。若要使用项目自带服务，运行：
 
 ```bash
-npm install
 npm start
 ```
 
