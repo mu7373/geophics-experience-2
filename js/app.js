@@ -1,7 +1,14 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RobotController } from './robotController.js';
-import { calibrationApi, motionApi, programApi } from './contracts.js';
+import {
+  calibrationApi,
+  motionApi as defaultMotionApi,
+  programApi,
+} from './contracts.js';
+import { createMotionApi } from './ik.js';
+import { createModel, forwardKinematics } from './fk.js';
+import {checkCollision} from './collision.js';
 
 const stateEl = document.querySelector('#run-state');
 const calibrationMessage = document.querySelector('#calibration-message');
@@ -39,6 +46,7 @@ async function loadScene() {
   const spec = await fetch('./images/models/joint_map.json').then((response) => response.json());
   const { robot } = await controller.loadRobot('./images/models/robot_articulated.glb', spec);
   scene.add(robot);
+
   stateEl.textContent = '模型已加载';
   calibrationMessage.textContent = '可记录工具系四点与用户系三点；计算模块待接入。';
 
@@ -82,13 +90,13 @@ checkButton.addEventListener('click', () => {
 runButton.addEventListener('click', async () => {
   if (!parsedProgram) return;
   stateEl.textContent = '运行中';
-  const executor = programApi.createExecutor({ motionApi });
+  const executor = programApi.createExecutor({ motionApi : defaultMotionApi });
   await executor.run(parsedProgram.instructions);
   stateEl.textContent = '完成';
 });
 
 stopButton.addEventListener('click', () => {
-  motionApi.emergencyStop();
+  defaultMotionApi.emergencyStop();
   stateEl.textContent = '急停';
   programMessage.textContent = '已停止当前任务；复位后才可继续执行。';
 });

@@ -35,12 +35,12 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
  * 常量
  * ══════════════════════════════════════════════════════════════ */
 
-/** 运动轴：GLB 几何实测的 5 个关节全部绕节点局部 +Y。 */
+/** 运动轴：实验二六轴 GLB 的关节均绕节点局部 +Y；J0 是底座回转轴。 */
 export const LOCAL_AXIS = Object.freeze(new THREE.Vector3(0, 1, 0));
 
 /** MOVJ 默认每个关节的最大速度 rad/s。教学用保守值，调用方可覆盖。 */
 export const DEFAULT_MAX_JOINT_SPEED = Object.freeze([
-  Math.PI / 2, Math.PI / 2, Math.PI / 2, Math.PI / 2, Math.PI / 2
+  Math.PI / 2, Math.PI / 2, Math.PI / 2, Math.PI / 2, Math.PI / 2, Math.PI / 2
 ]);
 
 /** 内部临时量，避免每帧 new */
@@ -155,7 +155,7 @@ export class RobotController {
     if (!this.tcp) {
       throw new Error(
         '[contract] GLB 里找不到名为 "tcp" 的节点。\n' +
-        '          模型1 的期望链：link_base → J1 → link_1 → J2 → link_2 → J3 → link_3 → J4 → link_4 → J5 → link_5 → link_flange → tcp\n' +
+        '          实验二模型链：robot-arm → J0（底座回转）→ J1 → link_1 → J2 → link_2 → J3 → link_3 → J4 → link_4 → J5 → link_5 → link_flange → tcp\n' +
         '          实际节点：' + collectNames(this.robot).join(', ')
       );
     }

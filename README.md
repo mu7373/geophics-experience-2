@@ -12,7 +12,7 @@ robot-arm-lab2/
 │  ├─ app.js              页面装配与事件绑定
 │  └─ contracts.js        三人共用接口，先冻结再实现
 ├─ images/                截图、录屏封面、模型与模型数据
-│  └─ models/             从实验一迁移的 GLB、关节限位和模型结构数据
+│  └─ models/             实验二六轴 GLB、关节限位和 FK 模型数据
 ├─ 任务分配.md             三人分工、依赖和验收标准
 └─ README.md              项目说明与协作规则
 ```
@@ -25,7 +25,7 @@ robot-arm-lab2/
 npm start
 ```
 
-随后打开 `http://127.0.0.1:8123`。模型已从实验一迁移到 `images/models/`，由 `js/app.js` 统一加载。
+随后打开 `http://127.0.0.1:8123`。实验二的六轴模型（含可回转底座 J0）位于 `images/models/`，由 `js/app.js` 统一加载。
 
 ## 开发顺序
 
