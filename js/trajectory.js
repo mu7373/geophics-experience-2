@@ -1,4 +1,5 @@
 import { forwardKinematics } from './fk.js';
+import { checkCollision } from './collision.js';
 
 function normalizeQuat(q) {
   const length = Math.hypot(...q);
@@ -98,6 +99,26 @@ export async function planMOVL(model, startJoints, targetPose, solveIK, options 
 
     seed = result.joints;
     trajectory.push({ t, joints: [...seed], pose });
+    if (options.obstacles?.length) {
+    const collision = checkTrajectoryCollision(
+        model,
+        [trajectory.at(-1)],
+        options.obstacles,
+        options.collision
+    );
+
+    if (!collision.ok || collision.collision) {
+        return {
+        ok: false,
+        message: collision.message,
+        failedIndex: k,
+        failedTime: t,
+        link: collision.link,
+        obstacle: collision.obstacle,
+        partialTrajectory: trajectory.slice(0, -1),
+        };
+    }
+}
   }
 
   return { ok: true, trajectory, duration };
@@ -156,5 +177,25 @@ export function planMOVJ(model, startJoints, endJoints, options = {}) {
     trajectory.push({ t, joints });
   }
 
+  if (options.obstacles?.length) {
+  const collision = checkTrajectoryCollision(
+    model,
+    trajectory,
+    options.obstacles,
+    options.collision
+  );
+
+  if (!collision.ok || collision.collision) {
+    return {
+      ok: false,
+      message: collision.message,
+      failedIndex: collision.sampleIndex,
+      failedTime: collision.t,
+      link: collision.link,
+      obstacle: collision.obstacle,
+      partialTrajectory: trajectory.slice(0, collision.sampleIndex ?? 0),
+    };
+  }
+}
   return { ok: true, trajectory, duration };
 }
