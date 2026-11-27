@@ -55,13 +55,22 @@ GRIP CLOSE
 WAIT 0.5
 MOVL P_PRE, SPEED=30%
 MOVJ P_PLACE_PRE
+LOOP 2
+  MOVL P_PLACE, SPEED=20%
+  WAIT 0.2
+  MOVL P_PLACE_PRE, SPEED=20%
+ENDLOOP
 MOVL P_PLACE, SPEED=20%
 GRIP OPEN
+WAIT 0.3
 MOVJ HOME</textarea>
           <div class="button-row">
             <button id="check-program">检查脚本</button>
             <button id="run-program" disabled>运行</button>
+            <button id="pause-program" disabled>暂停</button>
+            <button id="resume-program" disabled>继续</button>
             <button id="emergency-stop" class="danger">急停</button>
+            <button id="reset-program" disabled>急停复位</button>
           </div>
           <pre id="program-message" class="output">等待脚本检查。</pre>
         </section>

@@ -1,3 +1,6 @@
+import { parseProgram } from './dsl.js';
+import { createExecutor } from './executor.js';
+
 /**
  * 实验二共享接口。
  * 三人先按本文件对接，具体实现可分别放在 ik.js、calibration.js、dsl.js。
@@ -31,7 +34,7 @@ export const calibrationApi = {
  * parseProgram(text) 返回 { ok, instructions, errors }；执行器通过 motionApi 调度运动。
  */
 export const programApi = {
-  parseProgram: () => ({ ok: false, instructions: [], errors: ['DSL 模块尚未接入'] }),
-  createExecutor: () => ({ state: 'IDLE', run: async () => {}, stop: () => {} }),
+  parseProgram,
+  createExecutor,
 };
 
