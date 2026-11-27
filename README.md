@@ -42,3 +42,16 @@ npm start
 - 不提交 `node_modules/`、浏览器缓存或临时录像；验收截图统一放 `images/`。
 - 合并前至少检查：页面能加载、浏览器控制台无报错、基础脚本能被解析。
 
+## 虚拟指令
+
+`js/dsl.js` 支持 `MOVJ`、`MOVL`、`GRIP`、`WAIT`、`LOOP ... ENDLOOP` 和
+`SET SPEED` 六类指令；速度使用 `(0, 100]` 的百分比。`js/executor.js`
+提供 `IDLE / RUNNING / PAUSED / DONE / E-STOP` 状态机，急停后必须复位才能再次运行。
+页面内置了含等待、循环和速度设置的抓取—搬运—放置脚本。
+
+运行纯 JavaScript 单元测试：
+
+```bash
+npm test
+```
+
